@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أم يوسف للتسويق الإلكتروني الفاخر</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#d4af37">
+    <meta name="description" content="أم يوسف - متجر منتجات التجميل الفاخرة. جمالكِ الطبيعي، لمستنا الساحرة">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Umm Yousef">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23d4af37'/><text x='50' y='65' font-size='40' text-anchor='middle' fill='white' font-family='Arial'>أم</text></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- International Phone Input -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+    
+    <!-- Tesseract OCR for ID Verification -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    
+    <!-- Tesseract OCR for ID Verification -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    
+    <style>
+        * {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .arabic-title {
+            font-family: 'Amiri', 'Cairo', serif;
+        }
+        
+        /* Light Theme */
+        .light-theme {
+            --bg-primary: #f8f6f2;
+            --bg-marble: linear-gradient(135deg, #faf8f5 0%, #f5f3ee 25%, #ebe8e1 50%, #f0ede6 75%, #faf8f5 100%);
+            --bg-card: rgba(255, 255, 255, 0.8);
+            --bg-card-hover: rgba(255, 255, 255, 0.95);
+            --text-primary: #2c2416;
+            --text-secondary: #5d5847;
+            --border-color: rgba(212, 175, 55, 0.3);
+            --gold-primary: #d4af37;
+            --shadow-color: rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Dark Theme */
+        .dark-theme {
+            --bg-primary: #1a1814;
+            --bg-marble: linear-gradient(135deg, #0f0e0c 0%, #1a1814 25%, #242219 50%, #1a1814 75%, #0f0e0c 100%);
+            --bg-card: rgba(35, 32, 28, 0.9);
+            --bg-card-hover: rgba(45, 42, 38, 0.95);
+            --text-primary: #f9f7f4;
+            --text-secondary: #c9c5bc;
+            --border-color: rgba(212, 175, 55, 0.4);
+            --gold-primary: #ffd700;
+            --shadow-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        body {
+            background: var(--bg-marble);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        .marble-bg {
+            background: var(--bg-marble);
+            background-size: 400% 400%;
+            animation: marbleShift 20s ease infinite;
+        }
+        
+        @keyframes marbleShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #c9a961 0%, #d4af37 50%, #f4e5c2 100%);
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+        
+        .gold-foil {
+            background: linear-gradient(135deg, #b8921f 0%, #d4af37 25%, #ffd700 50%, #d4af37 75%, #b8921f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.4));
+        }
+        
+        .glass-effect {
+            background: var(--bg-card);
+            backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px var(--shadow-color);
+        }
+        
+        .glass-effect:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 9999;
+            animation: slideInRight 0.5s ease;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.75rem 0.5rem;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-item.active {
+            color: var(--gold-primary);
+        }
+        
+        .badge {
+            position: absolute;
+            top: 0.25rem;
+            right: 1rem;
+            background: #ef4444;
+            color: white;
+            border-radius: 9999px;
+            width: 1.25rem;
+            height: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .chatbot-fab {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 99;
+        }
+        
+        .chatbot-container {
+            position: fixed;
+            bottom: 150px;
+            left: 20px;
+            width: 90%;
+            max-width: 350px;
+            max-height: 500px;
+            z-index: 98;
+        }
+        
+        .chat-messages {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 1rem;
+            max-width: 85%;
+        }
+        
+        .message.user {
+            background: linear-gradient(135deg, #d4af37, #f4e5c2);
+            margin-left: auto;
+            color: white;
+        }
+        
+        .message.bot {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+        }
+        
+        /* RTL Support */
+        [dir="rtl"] .message.user {
+            margin-right: auto;
+            margin-left: 0;
+        }
+        
+        [dir="ltr"] .message.user {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        
+        /* Image upload preview */
+        .upload-preview {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        /* Line clamp for product description */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Page transitions */
+        .page-transition {
+            animation: pageSlide 0.3s ease;
+        }
+        
+        @keyframes pageSlide {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid var(--gold-primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="marble-bg light-theme">
+    
+    <!-- Language & Theme Selector -->
+    <div class="fixed top-4 left-4 z-50 flex items-center gap-2">
+        <button onclick="toggleLanguage()" id="language-toggle" class="glass-effect w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center cursor-pointer" title="Language">
+            🇸🇦
+        </button>
+        <button onclick="toggleTheme()" id="theme-toggle" class="glass-effect w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center" title="Theme">
+            🌙
+        </button>
+    </div>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="fixed inset-0 z-50 flex items-center justify-center">
+        <div class="text-center fade-in">
+            <div class="mb-8 pulse">
+                <svg class="w-32 h-32 mx-auto drop-shadow-2xl" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#b8921f;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#ffd700;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#b8921f;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="75" fill="url(#goldGradient)"/>
+                    <text x="100" y="120" font-size="65" font-weight="900" text-anchor="middle" fill="#fff" font-family="Amiri">أم</text>
+                </svg>
+            </div>
+            <h1 class="text-5xl font-black gold-foil mb-4 arabic-title">أم يوسف</h1>
+            <p class="text-xl font-semibold arabic-title" style="color: var(--text-primary);">
+                <span class="gold-foil">جمالكِ الطبيعي، لمستنا الساحرة</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Selection Screen -->
+    <div id="selection-screen" class="hidden fixed inset-0 z-40 flex items-center justify-center p-4">
+        <div class="glass-effect rounded-3xl p-8 max-w-2xl w-full">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-black gold-foil mb-2" data-translate="welcome">مرحباً بك</h2>
+                <p class="text-lg" data-translate="select_login">اختر طريقة الدخول</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div onclick="showCustomerLogin()" class="glass-effect rounded-2xl p-8 cursor-pointer hover:scale-105 transition text-center">
+                    <div class="text-6xl mb-4">🛍️</div>
+                    <h3 class="text-2xl font-black gold-foil mb-2" data-translate="customer_login">تسوق الآن</h3>
+                    <p data-translate="for_customers">للمستخدمين والزوار</p>
+                </div>
+                
+                <div onclick="showAdminLogin()" class="glass-effect rounded-2xl p-8 cursor-pointer hover:scale-105 transition text-center">
+                    <div class="text-6xl mb-4">🔐</div>
+                    <h3 class="text-2xl font-black gold-foil mb-2" data-translate="admin_login">لوحة المسؤول</h3>
+                    <p data-translate="for_admin">إدارة المتجر والمنتجات</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Login with WhatsApp -->
+    <div id="login-screen" class="hidden fixed inset-0 z-40 flex items-center justify-center p-4">
+        <div class="glass-effect rounded-3xl p-8 max-w-md w-full">
+            <button onclick="backToSelection()" class="mb-4 text-sm underline">← <span data-translate="back">رجوع</span></button>
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-black gold-foil mb-2" data-translate="login_title">تسجيل الدخول</h2>
+                <p data-translate="whatsapp_login_desc">سجل برقم WhatsApp الخاص بك</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block font-medium mb-2" data-translate="full_name">الاسم الكامل</label>
+                    <input type="text" id="customer-name" class="w-full px-4 py-3 rounded-xl border-2 focus:outline-none glass-effect" placeholder="فاطمة عبدالله" minlength="3" required>
+                    <p class="text-xs mt-2 opacity-70" data-translate="real_name_required">⚠️ يجب إدخال الاسم الحقيقي الكامل (3 أحرف على الأقل)</p>
+                </div>
+                <div>
+                    <label class="block font-medium mb-2" data-translate="whatsapp_number">رقم WhatsApp</label>
+                    <input type="tel" id="customer-phone" class="w-full px-4 py-3 rounded-xl border-2 focus:outline-none glass-effect">
+                    <p class="text-xs mt-2 opacity-70" data-translate="must_whatsapp">⚠️ يجب أن يكون رقم WhatsApp فعّال وصحيح</p>
+                </div>
+                <button onclick="loginWithWhatsApp()" class="w-full gold-gradient text-white font-bold py-4 rounded-xl hover:shadow-xl">
+                    📱 <span data-translate="login_whatsapp">تسجيل الدخول عبر WhatsApp</span>
+                </button>
+                <div class="text-center text-xs opacity-70">
+                    <p data-translate="login_once">✅ تسجيل الدخول مرة واحدة فقط - سيتم حفظ بياناتك للمرات القادمة</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login -->
+    <div id="admin-login-screen" class="hidden fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/50">
+        <div class="glass-effect rounded-3xl p-8 max-w-md w-full">
+            <button onclick="backToSelection()" class="mb-4 text-sm underline">← <span data-translate="back">رجوع</span></button>
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-black gold-foil mb-2" data-translate="admin_panel">لوحة المسؤول</h2>
+                <p data-translate="enter_pin">أدخل رمز PIN للدخول</p>
+            </div>
+            
+            <div class="space-y-4">
+                <input type="password" id="admin-pin" maxlength="4" class="w-full px-4 py-3 rounded-xl border-2 focus:outline-none text-center text-2xl tracking-widest glass-effect" placeholder="••••">
+                <button onclick="adminLogin()" class="w-full gold-gradient text-white font-bold py-4 rounded-xl" data-translate="login">
+                    دخول
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" class="hidden pb-20">
+        
+        <!-- Header -->
+        <header class="glass-effect sticky top-0 z-30 shadow-lg">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-black gold-foil">أم يوسف</h1>
+                <div class="flex items-center gap-2">
+                    <a href="https://wa.me/252613679490" target="_blank" class="flex items-center gap-1 px-3 py-2 bg-green-500 text-white rounded-lg text-sm font-medium">
+                        <span class="text-base">📞</span>
+                        <span class="hidden sm:inline" data-translate="whatsapp">WhatsApp</span>
+                    </a>
+                    <button onclick="logout()" class="flex items-center gap-1 px-3 py-2 gold-gradient text-white rounded-lg text-sm font-medium">
+                        <span class="text-base">🚪</span>
+                        <span class="hidden sm:inline" data-translate="logout">خروج</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Home Page -->
+        <div id="home-page" class="container mx-auto px-4 py-6 page-transition">
+            <!-- Hero -->
+            <div class="glass-effect rounded-3xl p-8 mb-6 text-center">
+                <h2 class="text-3xl font-black gold-foil mb-4 arabic-title" data-translate="hero_title">جمالكِ الطبيعي، لمستنا الساحرة</h2>
+                <div class="mb-6">
+                    <div class="inline-block px-4 py-2 rounded-full mb-3" style="background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold-primary);">
+                        <span class="text-sm font-bold" style="color: var(--gold-primary);">✨ بدعم الذكاء الاصطناعي AI ✨</span>
+                    </div>
+                    <p id="ai-slogan" class="text-xl font-semibold italic arabic-title" style="color: var(--text-primary);">
+                        ✨ اكتشفي سر الجمال الطبيعي مع منتجاتنا الفاخرة ✨
+                    </p>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="mb-6">
+                <h3 class="text-2xl font-black gold-foil mb-4" data-translate="categories">الفئات</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div onclick="filterCategory('all')" class="glass-effect rounded-xl p-4 text-center cursor-pointer category-btn active">
+                        <div class="text-3xl mb-2">✨</div>
+                        <p class="text-sm font-bold" data-translate="all">الكل</p>
+                    </div>
+                    <div onclick="filterCategory('skincare')" class="glass-effect rounded-xl p-4 text-center cursor-pointer category-btn">
+                        <div class="text-3xl mb-2">🧴</div>
+                        <p class="text-sm font-bold" data-translate="skincare">العناية بالبشرة</p>
+                    </div>
+                    <div onclick="filterCategory('haircare')" class="glass-effect rounded-xl p-4 text-center cursor-pointer category-btn">
+                        <div class="text-3xl mb-2">💆</div>
+                        <p class="text-sm font-bold" data-translate="haircare">العناية بالشعر</p>
+                    </div>
+                    <div onclick="filterCategory('makeup')" class="glass-effect rounded-xl p-4 text-center cursor-pointer category-btn">
+                        <div class="text-3xl mb-2">💄</div>
+                        <p class="text-sm font-bold" data-translate="makeup">المكياج</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products -->
+            <div class="mb-6">
+                <h3 class="text-2xl font-black gold-foil mb-4" data-translate="products">المنتجات</h3>
+                <div id="products-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Page -->
+        <div id="cart-page" class="hidden container mx-auto px-4 py-6 page-transition">
+            <h2 class="text-2xl font-black gold-foil mb-6" data-translate="cart">السلة</h2>
+            
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be loaded here -->
+            </div>
+            
+            <div id="empty-cart" class="glass-effect rounded-2xl p-12 text-center">
+                <p class="text-xl font-medium mb-4" data-translate="cart_empty">سلة التسوق فارغة</p>
+                <button onclick="showPage('home')" class="gold-gradient text-white font-bold px-6 py-3 rounded-xl" data-translate="browse_products">
+                    تصفح المنتجات
+                </button>
+            </div>
+            
+            <div id="cart-summary" class="hidden glass-effect rounded-2xl p-6 sticky bottom-24">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-bold" data-translate="total">الإجمالي</span>
+                    <span id="cart-total" class="text-2xl font-black gold-foil">$0</span>
+                </div>
+                <button onclick="showPage('checkout')" class="w-full gold-gradient text-white font-bold py-4 rounded-xl" data-translate="proceed_checkout">
+                    متابعة الدفع
+                </button>
+            </div>
+        </div>
+
+        <!-- Product Details Page -->
+        <div id="product-details-page" class="hidden container mx-auto px-4 py-6 page-transition">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="closeProductDetails()" class="text-2xl">←</button>
+                <h2 class="text-2xl font-black gold-foil" data-translate="product_details">تفاصيل المنتج</h2>
+            </div>
+            
+            <div class="glass-effect rounded-2xl p-6 mb-6">
+                <img id="detail-product-image" src="" alt="" class="w-full h-64 object-cover rounded-xl mb-6">
+                
+                <h3 id="detail-product-name" class="text-2xl font-black gold-foil mb-3"></h3>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <span id="detail-product-price" class="text-3xl font-black gold-foil"></span>
+                    <span id="detail-product-stock" class="px-4 py-2 rounded-full text-sm font-bold"></span>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="font-bold mb-2" data-translate="product_description">وصف المنتج</h4>
+                    <p id="detail-product-description" class="text-base leading-relaxed opacity-80"></p>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="font-bold mb-2" data-translate="product_category">الفئة</h4>
+                    <span id="detail-product-category" class="inline-block px-4 py-2 rounded-full glass-effect text-sm font-bold"></span>
+                </div>
+                
+                <button onclick="addToCartFromDetails()" id="detail-add-to-cart" class="w-full gold-gradient text-white font-bold py-4 rounded-xl text-lg">
+                    <span data-translate="add_to_cart">أضف للسلة</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Checkout Page -->
+        <div id="checkout-page" class="hidden container mx-auto px-4 py-6 page-transition">
+            <h2 class="text-2xl font-black gold-foil mb-6" data-translate="checkout">إتمام الطلب</h2>
+            
+            <!-- Order Summary -->
+            <div class="glass-effect rounded-2xl p-6 mb-6">
+                <h3 class="text-xl font-black mb-4" data-translate="order_summary">ملخص الطلب</h3>
+                <div id="checkout-items" class="space-y-3 mb-4">
+                    <!-- Order items will be loaded here -->
+                </div>
+                <div class="border-t-2 pt-4" style="border-color: var(--border-color);">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold" data-translate="total">الإجمالي</span>
+                        <span id="checkout-total" class="text-2xl font-black gold-foil">$0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Methods -->
+            <div class="glass-effect rounded-2xl p-6 mb-6">
+                <h3 class="text-xl font-black mb-4" data-translate="payment_method">طريقة الدفع</h3>
+                <div class="space-y-3">
+                    <button onclick="payWithEVC()" class="w-full payment-option glass-effect rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-[var(--gold-primary)]">
+                        <div class="flex items-center gap-3">
+                            <div class="text-3xl">💳</div>
+                            <div class="text-right flex-1">
+                                <h4 class="font-bold">EVC Plus</h4>
+                                <p class="text-sm opacity-70" data-translate="instant_payment">دفع فوري - اتصال مباشر</p>
+                            </div>
+                        </div>
+                    </button>
+                    
+                    <button onclick="payWithWhatsApp()" class="w-full payment-option glass-effect rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-[var(--gold-primary)]">
+                        <div class="flex items-center gap-3">
+                            <div class="text-3xl">📱</div>
+                            <div class="text-right flex-1">
+                                <h4 class="font-bold">WhatsApp</h4>
+                                <p class="text-sm opacity-70" data-translate="direct_contact">تواصل مباشر</p>
+                            </div>
+                        </div>
+                    </button>
+                    
+                    <button onclick="selectPayment('credit')" class="w-full payment-option glass-effect rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-[var(--gold-primary)]">
+                        <div class="flex items-center gap-3">
+                            <div class="text-3xl">🕒</div>
+                            <div class="text-right flex-1">
+                                <h4 class="font-bold" data-translate="pay_later">الدفع الآجل</h4>
+                                <p class="text-sm opacity-70" data-translate="pay_later_desc">دفع عند الاستلام</p>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pay Later Form Page -->
+        <div id="paylater-page" class="hidden container mx-auto px-4 py-6 page-transition">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="showPage('checkout')" class="text-2xl">←</button>
+                <h2 class="text-2xl font-black gold-foil" data-translate="pay_later_form">نموذج الدفع الآجل</h2>
+            </div>
+            
+            <div class="glass-effect rounded-2xl p-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+                <div class="space-y-6">
+                    
+                    <!-- Step 1: Upload ID -->
+                    <div class="border-2 rounded-xl p-4" style="border-color: var(--gold-primary); background: rgba(212, 175, 55, 0.05);">
+                        <h3 class="font-black text-lg mb-4 flex items-center gap-2">
+                            <span>📸</span>
+                            <span data-translate="upload_id">1. تحميل صور الهوية</span>
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <!-- Important Notice -->
+                            <div class="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 rounded-xl p-4 mb-4">
+                                <h4 class="font-black text-red-600 dark:text-red-400 mb-2 flex items-center gap-2">
+                                    <span>⚠️</span>
+                                    <span data-translate="id_warning">تحذير مهم</span>
+                                </h4>
+                                <ul class="text-xs space-y-1 text-red-700 dark:text-red-300">
+                                    <li data-translate="id_warning_1">✓ يجب أن تكون صور بطاقة NIRA الحقيقية فقط</li>
+                                    <li data-translate="id_warning_2">✓ يجب أن تكون الصور واضحة ويمكن قراءة البيانات</li>
+                                    <li data-translate="id_warning_3">✓ الوجه الأمامي يحتوي على الصورة والاسم</li>
+                                    <li data-translate="id_warning_4">✓ الوجه الخلفي يحتوي على رقم NIRA (11 رقم)</li>
+                                    <li data-translate="id_warning_5">✓ سيتم التحقق من صحة البطاقة قبل القبول</li>
+                                    <li data-translate="id_warning_6">🤖 سيتم استخدام الذكاء الاصطناعي للتحقق من البطاقة</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Front ID -->
+                            <div>
+                                <label class="block font-bold mb-2" data-translate="id_front">الوجه الأمامي للهوية (مع الصورة والاسم) *</label>
+                                <div class="upload-area" id="front-upload-area" onclick="document.getElementById('id-front').click()">
+                                    <input type="file" id="id-front" accept="image/jpeg,image/jpg,image/png" class="hidden" onchange="previewID('front')">
+                                    <div id="front-preview">
+                                        <div class="text-5xl mb-2">🪪</div>
+                                        <p class="text-sm font-bold" data-translate="click_upload">اضغط لتحميل صورة البطاقة الأمامية</p>
+                                        <p class="text-xs mt-2 opacity-70">NIRA - الوجه الأمامي</p>
+                                    </div>
+                                </div>
+                                <div id="front-validation" class="hidden mt-2"></div>
+                            </div>
+                            
+                            <!-- Back ID -->
+                            <div>
+                                <label class="block font-bold mb-2" data-translate="id_back">الوجه الخلفي للهوية (مع رقم NIRA) *</label>
+                                <div class="upload-area" id="back-upload-area" onclick="document.getElementById('id-back').click()">
+                                    <input type="file" id="id-back" accept="image/jpeg,image/jpg,image/png" class="hidden" onchange="previewID('back')">
+                                    <div id="back-preview">
+                                        <div class="text-5xl mb-2">🪪</div>
+                                        <p class="text-sm font-bold" data-translate="click_upload">اضغط لتحميل صورة البطاقة الخلفية</p>
+                                        <p class="text-xs mt-2 opacity-70">NIRA - الوجه الخلفي</p>
+                                    </div>
+                                </div>
+                                <div id="back-validation" class="hidden mt-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Personal Info -->
+                    <div class="border-2 rounded-xl p-4" style="border-color: var(--border-color); background: var(--bg-card);">
+                        <h3 class="font-black text-lg mb-4 flex items-center gap-2">
+                            <span>👤</span>
+                            <span data-translate="personal_info">2. المعلومات الشخصية</span>
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block font-bold mb-2" data-translate="full_name_id">الاسم الكامل (يجب أن يكون نفس الاسم في البطاقة) *</label>
+                                <input type="text" id="paylater-name" class="w-full px-4 py-3 rounded-xl glass-effect border-2" placeholder="Mohamed Ahmed Ali" minlength="5" required>
+                                <p class="text-xs mt-2 text-red-600 dark:text-red-400 font-bold" data-translate="exact_name_warning">
+                                    ⚠️ يجب كتابة الاسم بالضبط كما هو مكتوب في بطاقة NIRA
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <label class="block font-bold mb-2" data-translate="nira_number">رقم NIRA (11 رقم بالضبط) *</label>
+                                <input type="text" id="paylater-nira" maxlength="11" pattern="[0-9]{11}" class="w-full px-4 py-3 rounded-xl glass-effect border-2 text-center text-xl font-mono tracking-wider" placeholder="12345678901" required>
+                                <p class="text-xs mt-2 flex items-center gap-1 text-red-600 dark:text-red-400 font-bold">
+                                    <span>⚠️</span>
+                                    <span data-translate="nira_note">يجب أن يكون رقم NIRA الحقيقي من البطاقة (11 رقم فقط)</span>
+                                </p>
+                                <div id="nira-validation" class="hidden mt-2"></div>
+                            </div>
+                            
+                            <div>
+                                <label class="block font-bold mb-2" data-translate="location">المكان / المنطقة *</label>
+                                <input type="text" id="paylater-location" class="w-full px-4 py-3 rounded-xl glass-effect border-2" placeholder="Mogadishu - Hamar Weyne">
+                            </div>
+                            
+                            <div>
+                                <label class="block font-bold mb-2" data-translate="payment_date">موعد الدفع المتوقع *</label>
+                                <input type="date" id="paylater-date" class="w-full px-4 py-3 rounded-xl glass-effect border-2">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Additional Notes -->
+                    <div class="border-2 rounded-xl p-4" style="border-color: var(--border-color); background: var(--bg-card);">
+                        <h3 class="font-black text-lg mb-4 flex items-center gap-2">
+                            <span>📝</span>
+                            <span data-translate="notes">3. ملاحظات إضافية</span>
+                        </h3>
+                        <textarea id="paylater-notes" class="w-full px-4 py-3 rounded-xl glass-effect border-2" rows="3" placeholder="أي معلومات إضافية..."></textarea>
+                    </div>
+                    
+                    <!-- Order Summary -->
+                    <div class="border-2 rounded-xl p-4" style="border-color: var(--gold-primary); background: rgba(212, 175, 55, 0.1);">
+                        <h3 class="font-black text-lg mb-4 flex items-center gap-2">
+                            <span>📦</span>
+                            <span data-translate="order_details">تفاصيل الطلب</span>
+                        </h3>
+                        <div id="paylater-order-summary" class="space-y-2">
+                            <!-- Will be filled dynamically -->
+                        </div>
+                    </div>
+                    
+                    <button onclick="submitPayLater()" class="w-full gold-gradient text-white font-bold py-4 rounded-xl">
+                        <span data-translate="submit_request">إرسال الطلب</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav glass-effect">
+            <div class="flex justify-around">
+                <div class="nav-item active" onclick="showPage('home')">
+                    <div class="text-2xl">🏠</div>
+                    <span class="text-xs font-medium mt-1" data-translate="home">الرئيسية</span>
+                </div>
+                <div class="nav-item" onclick="showPage('cart')">
+                    <div class="text-2xl">🛒</div>
+                    <span class="text-xs font-medium mt-1" data-translate="cart">السلة</span>
+                    <span id="cart-badge" class="badge hidden">0</span>
+                </div>
+                <div class="nav-item" onclick="showPage('checkout')">
+                    <div class="text-2xl">💳</div>
+                    <span class="text-xs font-medium mt-1" data-translate="checkout">الدفع</span>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="hidden pb-20">
+        <header class="glass-effect sticky top-0 z-30 shadow-lg">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-black gold-foil">🔐 <span data-translate="admin_dashboard">لوحة المسؤول</span></h1>
+                <button onclick="adminLogout()" class="px-3 py-2 bg-red-500 text-white rounded-lg text-sm font-medium" data-translate="logout">خروج</button>
+            </div>
+        </header>
+        
+        <div class="container mx-auto px-4 py-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="glass-effect rounded-xl p-4 text-center">
+                    <div class="text-4xl mb-2">📦</div>
+                    <div id="admin-products-count" class="text-2xl font-black gold-foil">12</div>
+                    <div class="text-sm" data-translate="products">المنتجات</div>
+                </div>
+                <div class="glass-effect rounded-xl p-4 text-center">
+                    <div class="text-4xl mb-2">🛒</div>
+                    <div id="admin-orders-count" class="text-2xl font-black gold-foil">0</div>
+                    <div class="text-sm" data-translate="orders">الطلبات</div>
+                </div>
+                <div class="glass-effect rounded-xl p-4 text-center">
+                    <div class="text-4xl mb-2">👥</div>
+                    <div id="admin-users-count" class="text-2xl font-black gold-foil">0</div>
+                    <div class="text-sm" data-translate="users">المستخدمين</div>
+                </div>
+                <div class="glass-effect rounded-xl p-4 text-center">
+                    <div class="text-4xl mb-2">📁</div>
+                    <div class="text-2xl font-black gold-foil">4</div>
+                    <div class="text-sm" data-translate="categories">الفئات</div>
+                </div>
+            </div>
+            
+            <!-- Products Management -->
+            <div class="glass-effect rounded-2xl p-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-black gold-foil" data-translate="manage_products">إدارة المنتجات</h3>
+                    <button onclick="showAddProduct()" class="gold-gradient text-white font-bold px-4 py-2 rounded-lg text-sm">
+                        + <span data-translate="add_product">إضافة منتج</span>
+                    </button>
+                </div>
+                <div id="admin-products-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Admin products will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Add/Edit Product Modal -->
+            <div id="product-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+                <div class="glass-effect rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-black gold-foil" id="modal-title" data-translate="add_product">إضافة منتج</h2>
+                        <button onclick="closeProductModal()" class="text-3xl font-bold">✕</button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <input type="hidden" id="edit-product-id">
+                        
+                        <!-- Product Image -->
+                        <div>
+                            <label class="block font-bold mb-2">صورة المنتج</label>
+                            <div class="upload-area" onclick="document.getElementById('product-image-input').click()">
+                                <input type="file" id="product-image-input" accept="image/*" class="hidden" onchange="previewProductImage()">
+                                <div id="product-image-preview">
+                                    <div class="text-5xl mb-2">📸</div>
+                                    <p class="text-sm font-bold">اضغط لرفع صورة المنتج</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product Names -->
+                        <div>
+                            <label class="block font-bold mb-2">اسم المنتج (عربي)</label>
+                            <input type="text" id="product-name-ar" class="w-full px-4 py-3 rounded-xl glass-effect border-2" required>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-2">Product Name (English)</label>
+                            <input type="text" id="product-name-en" class="w-full px-4 py-3 rounded-xl glass-effect border-2" required>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-2">Magaca Alaabta (Somali)</label>
+                            <input type="text" id="product-name-so" class="w-full px-4 py-3 rounded-xl glass-effect border-2" required>
+                        </div>
+                        
+                        <!-- AI Description Generator -->
+                        <div class="border-2 rounded-xl p-4" style="border-color: var(--gold-primary); background: rgba(212, 175, 55, 0.05);">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block font-bold">🤖 وصف المنتج (AI)</label>
+                                <button type="button" onclick="generateAIDescription()" class="gold-gradient text-white px-4 py-2 rounded-lg text-sm font-bold">
+                                    ✨ توليد تلقائي
+                                </button>
+                            </div>
+                            <textarea id="product-desc-ar" class="w-full px-4 py-3 rounded-xl glass-effect border-2 mb-2" rows="2" placeholder="الوصف بالعربية"></textarea>
+                            <textarea id="product-desc-en" class="w-full px-4 py-3 rounded-xl glass-effect border-2 mb-2" rows="2" placeholder="Description in English"></textarea>
+                            <textarea id="product-desc-so" class="w-full px-4 py-3 rounded-xl glass-effect border-2" rows="2" placeholder="Sharaxaada Soomaali"></textarea>
+                        </div>
+                        
+                        <!-- Price & Category -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-bold mb-2">السعر ($)</label>
+                                <input type="number" id="product-price" min="0" step="0.01" class="w-full px-4 py-3 rounded-xl glass-effect border-2" required>
+                            </div>
+                            <div>
+                                <label class="block font-bold mb-2">المخزون</label>
+                                <input type="number" id="product-stock" min="0" class="w-full px-4 py-3 rounded-xl glass-effect border-2" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block font-bold mb-2">الفئة</label>
+                            <select id="product-category" class="w-full px-4 py-3 rounded-xl glass-effect border-2">
+                                <option value="skincare">العناية بالبشرة</option>
+                                <option value="haircare">العناية بالشعر</option>
+                                <option value="makeup">المكياج</option>
+                                <option value="fragrance">العطور</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Expiry Date (AI Generated) -->
+                        <div>
+                            <label class="block font-bold mb-2">📅 تاريخ الصلاحية</label>
+                            <input type="date" id="product-expiry" class="w-full px-4 py-3 rounded-xl glass-effect border-2">
+                            <p class="text-xs mt-1 opacity-70">سيتم اقتراح تاريخ تلقائياً بواسطة AI</p>
+                        </div>
+                        
+                        <button onclick="saveProduct()" class="w-full gold-gradient text-white font-bold py-4 rounded-xl">
+                            💾 حفظ المنتج
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings -->
+            <div class="glass-effect rounded-2xl p-6">
+                <h3 class="text-xl font-black gold-foil mb-4" data-translate="settings">الإعدادات</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block font-bold mb-2" data-translate="whatsapp_number">رقم WhatsApp</label>
+                        <input type="text" id="admin-whatsapp" value="+252613679490" class="w-full px-4 py-3 rounded-xl glass-effect">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2" data-translate="evc_number">رقم EVC</label>
+                        <input type="text" id="admin-evc" value="*712*613679490*" class="w-full px-4 py-3 rounded-xl glass-effect">
+                    </div>
+                    <button onclick="changePassword()" class="w-full gold-gradient text-white font-bold py-3 rounded-xl" data-translate="change_password">
+                        تغيير كلمة المرور
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot-container" class="chatbot-container hidden">
+        <div class="glass-effect rounded-2xl shadow-2xl">
+            <div class="gold-gradient p-4 rounded-t-2xl flex justify-between items-center">
+                <h3 class="font-bold text-white">🤖 <span data-translate="ai_assistant">مساعد AI</span></h3>
+                <button onclick="toggleChatbot()" class="text-white font-bold text-xl">✕</button>
+            </div>
+            <div class="chat-messages p-4" id="chat-messages">
+                <div class="message bot">
+                    <span data-translate="bot_welcome">مرحباً! اسألني عن أي منتج 😊</span>
+                </div>
+            </div>
+            <div class="p-4 border-t" style="border-color: var(--border-color);">
+                <div class="flex gap-2">
+                    <input type="text" id="chat-input" class="flex-1 px-4 py-2 rounded-lg glass-effect" placeholder="اكتب رسالتك...">
+                    <button onclick="sendMessage()" class="gold-gradient text-white px-6 py-2 rounded-lg font-bold">➤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button onclick="toggleChatbot()" class="chatbot-fab gold-gradient text-white text-2xl">
+        💬
+    </button>
+
+    <script src="app.js"></script>
+</body>
+</html>
